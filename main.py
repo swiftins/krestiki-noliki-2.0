@@ -38,7 +38,7 @@ def on_click(row, col):
         messagebox.showinfo("Игра окончена", f"Игрок {current_player} победил!")
         window.quit()
     elif check_draw():
-        messagebox.showinfo("Игра окончена", "СЕГОДНЯ ПОБЕДИТЕЛЕЙ НЕТ")
+        messagebox.showinfo("Игра окончена", "НИЧЬЯ")
         window.quit()
     else:
         current_player = 'O' if current_player == 'X' else 'X'
