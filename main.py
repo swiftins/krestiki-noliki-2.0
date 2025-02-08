@@ -34,6 +34,7 @@ def on_click(row, col):
     if buttons[row][col]['text'] != "":
         return
     buttons[row][col]['text'] = current_player
+    buttons[row][col]['fg'] = "red"
 
     if check_winner():
         messagebox.showinfo("Игра окончена", f"Игрок {current_player} победил!")
@@ -47,7 +48,7 @@ def on_click(row, col):
 for i in range(3):
     row = []
     for j in range(3):
-        btn = tk.Button(window, text="", font=("Arial", 20), width=5, height=2, command=lambda r=i, c=j: on_click(r, c))
+        btn = tk.Button(window, text="", font=("Arial", 20), width=5, height=2, fg="black", command=lambda r=i, c=j: on_click(r, c))
         btn.grid(row=i, column=j)
         row.append(btn)
     buttons.append(row)
