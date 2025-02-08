@@ -1,13 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
 
-window = tk.Tk()
-window.title("Крестики-нолики")
-window.geometry("300x350")
-window.configure(bg="lightblue")  # Заливка экрана голубым цветом
-
-current_player = "X"
-buttons = []
+def choose_symbol(symbol):
+    global current_player
+    current_player = symbol
+    start_window.destroy()
 
 def check_winner():
     for i in range(3):
@@ -46,6 +43,22 @@ def on_click(row, col):
     else:
         current_player = 'O' if current_player == 'X' else 'X'
 
+# Окно выбора символа
+start_window = tk.Tk()
+start_window.title("Выбор символа")
+start_window.geometry("300x150")
+tk.Label(start_window, text="Выберите символ для игры", font=("Arial", 14)).pack(pady=10)
+tk.Button(start_window, text="X", font=("Arial", 14), width=5, command=lambda: choose_symbol("X")).pack(side=tk.LEFT, padx=20)
+tk.Button(start_window, text="O", font=("Arial", 14), width=5, command=lambda: choose_symbol("O")).pack(side=tk.RIGHT, padx=20)
+start_window.mainloop()
+
+# Главное игровое окно
+window = tk.Tk()
+window.title("Крестики-нолики")
+window.geometry("300x350")
+window.configure(bg="lightblue")
+
+buttons = []
 for i in range(3):
     row = []
     for j in range(3):
@@ -55,3 +68,4 @@ for i in range(3):
     buttons.append(row)
 
 window.mainloop()
+
