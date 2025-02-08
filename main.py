@@ -4,6 +4,7 @@ from tkinter import messagebox
 window = tk.Tk()
 window.title("Крестики-нолики")
 window.geometry("300x350")
+window.configure(bg="lightblue")  # Заливка экрана голубым цветом
 
 current_player = "X"
 buttons = []
@@ -54,5 +55,3 @@ for i in range(3):
     buttons.append(row)
 
 window.mainloop()
-
-
