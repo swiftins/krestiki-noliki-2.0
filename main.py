@@ -53,6 +53,4 @@ for i in range(3):
         row.append(btn)
     buttons.append(row)
 
-window.mainloop()
-
-
+window.mainloop() 
