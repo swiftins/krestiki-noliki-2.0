@@ -69,7 +69,7 @@ start_window = tk.Tk()
 start_window.title("Выбор символа")
 start_window.geometry("300x200")
 
-tk.Label(start_window, text="ИГРА ДО 3 ПОБЕД", font=("Arial", 14, "bold"), fg="blue").pack(pady=5)
+tk.Label(start_window, text="ИГРА ДЛЯ 2 УЧАСТНИКОВ", font=("Arial", 14, "bold"), fg="blue").pack(pady=5)
 tk.Label(start_window, text="Выберите символ для игры", font=("Arial", 14)).pack(pady=10)
 tk.Button(start_window, text="X", font=("Arial", 14), width=5, command=lambda: choose_symbol("X")).pack(side=tk.LEFT, padx=20)
 tk.Button(start_window, text="O", font=("Arial", 14), width=5, command=lambda: choose_symbol("O")).pack(side=tk.RIGHT, padx=20)
