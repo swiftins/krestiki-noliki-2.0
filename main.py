@@ -36,27 +36,36 @@ def on_click(row, col):
 
     if check_winner():
         messagebox.showinfo("Игра окончена", f"Игрок {current_player} победил!")
-        window.quit()
+        reset_game()
     elif check_draw():
         messagebox.showinfo("Игра окончена", "НИКТО НЕ ВЫИГРАЛ. НИЧЬЯ")
-        window.quit()
+        reset_game()
     else:
         current_player = 'O' if current_player == 'X' else 'X'
+
+def reset_game():
+    for row in buttons:
+        for btn in row:
+            btn['text'] = ""
+    global current_player
+    current_player = 'X'
 
 # Окно выбора символа
 start_window = tk.Tk()
 start_window.title("Выбор символа")
-start_window.geometry("300x150")
+start_window.geometry("300x200")
+
 tk.Label(start_window, text="ИГРА ДО 3 ПОБЕД", font=("Arial", 14, "bold"), fg="blue").pack(pady=5)
 tk.Label(start_window, text="Выберите символ для игры", font=("Arial", 14)).pack(pady=10)
 tk.Button(start_window, text="X", font=("Arial", 14), width=5, command=lambda: choose_symbol("X")).pack(side=tk.LEFT, padx=20)
 tk.Button(start_window, text="O", font=("Arial", 14), width=5, command=lambda: choose_symbol("O")).pack(side=tk.RIGHT, padx=20)
+
 start_window.mainloop()
 
 # Главное игровое окно
 window = tk.Tk()
 window.title("Крестики-нолики")
-window.geometry("300x350")
+window.geometry("300x400")
 window.configure(bg="lightblue")
 
 buttons = []
@@ -68,5 +77,6 @@ for i in range(3):
         row.append(btn)
     buttons.append(row)
 
-window.mainloop()
+tk.Button(window, text="Сбросить игру", font=("Arial", 14), command=reset_game).grid(row=3, column=0, columnspan=3, pady=10)
 
+window.mainloop()
