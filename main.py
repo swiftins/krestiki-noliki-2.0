@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 
 def choose_symbol(symbol):
-    global current_player
+    global current_player, player_scores
     current_player = symbol
+    player_scores = {'X': 0, 'O': 0}
     start_window.destroy()
 
 def check_winner():
@@ -35,20 +36,33 @@ def on_click(row, col):
     buttons[row][col]['fg'] = "red"
 
     if check_winner():
+        player_scores[current_player] += 1
+        update_score_label()
         messagebox.showinfo("Игра окончена", f"Игрок {current_player} победил!")
-        reset_game()
+        reset_board()
     elif check_draw():
         messagebox.showinfo("Игра окончена", "НИКТО НЕ ВЫИГРАЛ. НИЧЬЯ")
-        reset_game()
+        reset_board()
     else:
         current_player = 'O' if current_player == 'X' else 'X'
 
-def reset_game():
+def reset_board():
+    """Очищает игровое поле, но не сбрасывает счет"""
     for row in buttons:
         for btn in row:
             btn['text'] = ""
     global current_player
     current_player = 'X'
+
+def reset_game():
+    """Полностью сбрасывает игру (включая счет)"""
+    global player_scores
+    player_scores = {'X': 0, 'O': 0}
+    update_score_label()
+    reset_board()
+
+def update_score_label():
+    score_label.config(text=f"Счет: X - {player_scores['X']} | O - {player_scores['O']}")
 
 # Окно выбора символа
 start_window = tk.Tk()
@@ -65,18 +79,23 @@ start_window.mainloop()
 # Главное игровое окно
 window = tk.Tk()
 window.title("Крестики-нолики")
-window.geometry("300x400")
+window.geometry("300x450")
 window.configure(bg="lightblue")
+
+score_label = tk.Label(window, text="Счет: X - 0 | O - 0", font=("Arial", 14), bg="lightblue")
+score_label.grid(row=0, column=0, columnspan=3, pady=5)
 
 buttons = []
 for i in range(3):
     row = []
     for j in range(3):
         btn = tk.Button(window, text="", font=("Arial", 20), width=5, height=2, fg="black", command=lambda r=i, c=j: on_click(r, c))
-        btn.grid(row=i, column=j)
+        btn.grid(row=i+1, column=j)  # Смещаем кнопки вниз, чтобы освободить место для счета
         row.append(btn)
     buttons.append(row)
 
-tk.Button(window, text="Сбросить игру", font=("Arial", 14), command=reset_game).grid(row=3, column=0, columnspan=3, pady=10)
+tk.Button(window, text="Сбросить партию", font=("Arial", 14), command=reset_board).grid(row=4, column=0, columnspan=3, pady=5)
+tk.Button(window, text="Сбросить игру", font=("Arial", 14), command=reset_game).grid(row=5, column=0, columnspan=3, pady=5)
 
 window.mainloop()
+
